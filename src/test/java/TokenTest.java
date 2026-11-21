@@ -1,7 +1,6 @@
+import edu.io.Token;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-
-import edu.io.Token;
 
 public class TokenTest {
     @Test
