@@ -1,41 +1,53 @@
 package edu.io;
 
+import edu.io.token.EmptyToken;
+import edu.io.token.Token;
+
+import java.util.Random;
+
 public class Board {
+    public record Coords(int col, int row) {
+    }
 
-    private Token[][] tokenGrid;
-
-    public int size = 8;
+    private final int size = 8;
+    private final Token[][] tokenGrid;
+    private final Random random = new Random();
 
     public Board() {
-        tokenGrid = new Token[size][size];
+        this.tokenGrid = new Token[size][size];
         clean();
     }
 
-    public void placeToken(int x, int y, Token token) {
-        tokenGrid[x][y] = token;
+    public int size() {
+        return size;
+    }
+
+    public void placeToken(int col, int row, Token token) {
+        tokenGrid[col][row] = token;
     }
 
     public void clean() {
-        for (int x = 0; x < tokenGrid.length; x++) {
-            for (int y = 0; y < tokenGrid[0].length; y++) {
-                tokenGrid[x][y] = new Token("・");
+        for (int col = 0; col < size; col++) {
+            for (int row = 0; row < size; row++) {
+                tokenGrid[col][row] = new EmptyToken();
             }
         }
-
     }
 
-    public Token peekToken(int x, int y) {
+    public Token peekToken(int col, int row) {
+        return tokenGrid[col][row];
+    }
 
-        return tokenGrid[x][y];
+    public Coords placeForPlayer() {
+        return new Coords(random.nextInt(size), random.nextInt(size));
     }
 
     public void display() {
-        for (int x = 0; x < tokenGrid.length; x++) {
-            for (int y = 0; y < tokenGrid[0].length; y++) {
-                System.out.print(tokenGrid[x][y].label);
+        for (int row = 0; row < size; row++) {
+            for (int col = 0; col < size; col++) {
+                System.out.print(tokenGrid[col][row].label() + " ");
             }
-            System.out.println("");
+            System.out.println();
         }
     }
-
 }
